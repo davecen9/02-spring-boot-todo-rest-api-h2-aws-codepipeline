@@ -2,42 +2,34 @@ version: 0.2
 
 phases:
   install:
+
     runtime-versions:
       java: openjdk8
+    
     commands:
-      - echo Entered the install phase...
+      - echo install
+    
 
-    finally:
-      - echo This always runs even if the update or install command fails 
   pre_build:
+
     commands:
-      - echo Entered the pre_build phase...
-      - docker login –u User –p $LOGIN_PASSWORD
-    finally:
-      - echo This always runs even if the login command fails 
+      - echo pre_build
+      
+
   build:
+
     commands:
-      - echo Entered the build phase...
-      - echo Build started on `date`
       - mvn package
+      - echo build
 
   post_build:
-    commands:
-      - echo Entered the post_build phase...
-      - echo Build completed on `date`
 
-reports:
-  arn:aws:codebuild:your-region:your-aws-account-id:report-group/report-group-name-1:
-    files:
-      - "**/*"
-    base-directory: 'target/tests/reports'
-    discard-paths: no
-  reportGroupCucumberJson:
-    files:
-      - 'cucumber/target/cucumber-tests.xml'
-    discard-paths: yes
-    file-format: CucumberJson # default is JunitXml
+    commands:
+      - echo post_build
+
+
 artifacts:
   files:
     - target/spring-boot-todo-rest-api-h2-aws-codepipeline-0.0.1-SNAPSHOT.jar
-
+   
+  
